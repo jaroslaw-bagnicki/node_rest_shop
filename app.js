@@ -1,8 +1,15 @@
 const express = require('express');
-const app = express();
+const morgan = require('morgan');
 const productsRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
 
+// Setup app
+const app = express();
+
+// Setup logger middleware
+app.use(morgan('dev'));
+
+// Setup routers
 app.use('/products', productsRoutes);
 app.use('/orders', ordersRoutes);
 
