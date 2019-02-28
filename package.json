@@ -15,6 +15,7 @@
   "license": "Unlicense",
   "homepage": "https://github.com/jaroslaw-bagnicki/node_rest_shop#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "morgan": "^1.9.1"
   },
