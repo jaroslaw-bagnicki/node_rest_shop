@@ -1,8 +1,7 @@
 const express = require('express');
 const app = express();
+const productsRoutes = require('./api/routes/products');
 
-app.use((req, res, next) => {
-  res.status(200).send('Hello world!');
-});
+app.use('/products', productsRoutes);
 
 module.exports = app;
