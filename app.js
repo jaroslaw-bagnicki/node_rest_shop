@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 
+const setupHeaders = require('./api/middlewares/setupHeaders');
 const productsRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
 
@@ -13,6 +14,9 @@ app.use(morgan('dev'));
 // Setup body parsing
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+
+// Setup respons headers
+app.use(setupHeaders);
 
 // Setup routers
 app.use('/products', productsRoutes);
