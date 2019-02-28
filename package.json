@@ -15,7 +15,8 @@
   "license": "Unlicense",
   "homepage": "https://github.com/jaroslaw-bagnicki/node_rest_shop#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
   },
   "devDependencies": {
     "eslint": "^5.14.1",
