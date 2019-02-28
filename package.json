@@ -1,0 +1,22 @@
+{
+  "name": "node_rest_shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon server.js",
+    "start:prod": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaroslaw-bagnicki/node_rest_shop.git"
+  },
+  "author": "Jarosław Bagnicki <jarek@bagnicki.net>",
+  "license": "Unlicense",
+  "homepage": "https://github.com/jaroslaw-bagnicki/node_rest_shop#readme",
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.10"
+  }
+}
