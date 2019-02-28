@@ -2,6 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 
 const setupHeaders = require('./api/middlewares/setupHeaders');
+const notFoundError = require('./api/middlewares/notFoundError');
+const errorHandler = require('./api/middlewares/errorHandler');
+
 const productsRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
 
@@ -22,19 +25,7 @@ app.use(setupHeaders);
 app.use('/products', productsRoutes);
 app.use('/orders', ordersRoutes);
 
-// Handling resource not found
-app.use((req, res, next) => {
-  const error = new Error('Not found.');
-  error.status = 404;
-  next(error);
-});
-
-// Handling errors
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({error : {
-    message: error.message
-  }});
-});
+app.use(notFoundError);
+app.use(errorHandler);
 
 module.exports = app;
