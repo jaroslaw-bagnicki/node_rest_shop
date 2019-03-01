@@ -1,7 +1,9 @@
 # Simple Node.js shop api with MongoDB
 
 To run development mode use `npm run start:dev`.  
-Note: To run development database You need have installed `docker` and `docer compose`.
+
+To run only app development mode use `npm run start:dev:app`.  
+To run only development database use `npm run start:dev:db`. Note: To start development database You need have installed `docker` and `docker-compose`.
 
 Production version to need some environment variables:
   - `PORT`
