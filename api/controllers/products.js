@@ -1,6 +1,29 @@
 const mongoose = require('mongoose');
 const Product = require('../models/product');
 
+exports.getProductById = (req, res, next) => {
+  const id = req.params.id;
+  if (mongoose.Types.ObjectId.isValid(id)) {
+    Product.findById(req.params.id)
+      .then(doc => {
+        if (doc) {
+          console.log(`Product found (quered id: ${doc._id})`);
+          return res.status(200).json(doc);
+        } else {
+          next();       
+        }
+      })
+      .catch(error => {
+        console.error('Error: ', error);
+        next(error);
+      });
+  } else {
+    const error = new Error('Invalid id.');
+    error.status = 400;
+    next(error);
+  }
+};
+
 exports.addProduct = (req, res, next) => {
   const product = new Product({
     _id: mongoose.Types.ObjectId(),
@@ -10,10 +33,10 @@ exports.addProduct = (req, res, next) => {
   });
   product.save()
     .then(result => {
-      console.log('Product saved. Id: ', result._id);
+      console.log(`Product saved (id: ${result._id})`);
       return res.status(201).json({
         message: 'Product created.',
-        product
+        result
       });
     })
     .catch(error => {
