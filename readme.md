@@ -3,7 +3,7 @@
 To run development mode use `npm run start:dev`.  
 
 To run only app development mode use `npm run start:dev:app`.  
-To run only development database use `npm run start:dev:db`. Note: To start development database You need have installed `docker` and `docker-compose`.
+To run only development database use `npm run start:dev:db`. By default **web gui client** (`mongo-express`) is setup on: <http://localhost:8081>. Note: To start development database You need have installed `docker` and `docker-compose`. 
 
 Production version to need some environment variables:
   - `PORT`
