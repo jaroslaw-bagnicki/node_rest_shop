@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon server.js",
+    "start:dev:app": "nodemon server.js",
+    "start:dev:db": "docker-compose -f ./docker-compose.devdb.yml up",
     "start:prod": "node server.js"
   },
   "repository": {
