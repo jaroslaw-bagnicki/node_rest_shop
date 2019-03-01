@@ -1,4 +1,4 @@
-exports.PORT = process.env.PORT || 3000;
+// Development environment variables are setup in nodemon config file
 
 exports.RES_HEADERS = {
   'Access-Control-Allow-Origin': '*',
