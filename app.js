@@ -19,10 +19,16 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-mongoose.connect(process.env.DB_URL + process.env.DB_NAME, { useNewUrlParser: true });
-const db = mongoose.connection;
-db.on('connected', () => console.log('Connected to: ' + process.env.DB_URL + process.env.DB_NAME));
-db.on('error', (err) => console.error(err));
+console.log(process.env.DB_USERNAME, process.env.DB_PASSWORD);
+
+mongoose.connect(process.env.DB_URL, { 
+  user: process.env.DB_USERNAME,
+  pass: process.env.DB_PASSWORD,
+  dbName: process.env.DB_NAME,
+  useNewUrlParser: true 
+});
+mongoose.connection.once('connected', () => console.log('Connected to: ' + process.env.DB_URL + process.env.DB_NAME));
+mongoose.connection.on('error', (err) => console.error('MongoDB connection error: ', err.errmsg || err.name));
 
 // Setup respons headers
 app.use(setupHeaders);
