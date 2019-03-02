@@ -23,7 +23,7 @@ exports.getProductById = (req, res, next) => {
     Product.findById(req.params.id)
       .then(doc => {
         if (doc) {
-          console.log(`Product found (quered id: ${doc._id})`);
+          console.log(`Product queried (id: ${doc._id})`);
           return res.status(200).json(doc);
         } else {
           next();       
@@ -61,14 +61,14 @@ exports.addProduct = (req, res, next) => {
     });
 };
 
-exports.getProductById = (req, res, next) => {
+exports.deleteProduct = (req, res, next) => {
   const id = req.params.id;
   if (mongoose.Types.ObjectId.isValid(id)) {
-    Product.findById(req.params.id)
-      .then(doc => {
-        if (doc) {
-          console.log(`Product found (quered id: ${doc._id})`);
-          return res.status(200).json(doc);
+    Product.findByIdAndDelete(req.params.id)
+      .then(result => {
+        if (result) {
+          console.log(`Product deleted (id: ${result._id})`);
+          return res.status(200).json(result);
         } else {
           next();       
         }
