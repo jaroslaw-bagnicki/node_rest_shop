@@ -48,11 +48,11 @@ exports.addProduct = (req, res, next) => {
     quantity: req.body.quantity || 0
   });
   product.save()
-    .then(result => {
-      console.log(`Product saved (id: ${result._id})`);
+    .then(doc => {
+      console.log(`Product saved (id: ${doc._id})`);
       return res.status(201).json({
         message: 'Product created.',
-        result
+        product: doc
       });
     })
     .catch(error => {
@@ -61,14 +61,46 @@ exports.addProduct = (req, res, next) => {
     });
 };
 
+exports.updateProduct = (req, res, next) => {
+  const id = req.params.id;
+  if (mongoose.Types.ObjectId.isValid(id)) {
+    const update = req.body;
+    Product.findByIdAndUpdate(id, update, {new: true})
+      .then(doc => {
+        if (doc) {
+          console.log(`Product updated (id: ${doc._id})`);
+          return res.status(200).json({
+            message: 'Product updated.',
+            product: doc
+          });
+        } else {
+          const error = new Error('Product not exist.');
+          error.status = 400;
+          next(error);
+        }
+      })
+      .catch(error => {
+        console.error('Error: ', error.errmsg);
+        next(error);
+      });
+  } else {
+    const error = new Error('Invalid id.');
+    error.status = 400;
+    next(error);
+  }
+};
+
 exports.deleteProduct = (req, res, next) => {
   const id = req.params.id;
   if (mongoose.Types.ObjectId.isValid(id)) {
-    Product.findByIdAndDelete(req.params.id)
-      .then(result => {
-        if (result) {
-          console.log(`Product deleted (id: ${result._id})`);
-          return res.status(200).json(result);
+    Product.findByIdAndDelete(id)
+      .then(doc => {
+        if (doc) {
+          console.log(`Product deleted (id: ${doc._id})`);
+          return res.status(200).json({
+            message: 'Product deleted.',
+            product: doc
+          });
         } else {
           next();       
         }
