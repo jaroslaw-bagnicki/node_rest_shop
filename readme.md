@@ -12,7 +12,7 @@ Production version to need some environment variables:
   - `DB_USERNAME`
   - `DB_PASSWORD`
 
-Environment variables are setup in nodemon config file. By default: 
+ Environment variables for development mode are setup in **nodemon** config file. By default: 
 ```
   "env": {
     "PORT": 3000,

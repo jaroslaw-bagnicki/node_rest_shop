@@ -19,8 +19,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-console.log(process.env.DB_USERNAME, process.env.DB_PASSWORD);
-
 mongoose.connect(process.env.DB_URL, { 
   user: process.env.DB_USERNAME,
   pass: process.env.DB_PASSWORD,
