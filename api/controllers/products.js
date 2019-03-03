@@ -5,12 +5,11 @@ const customErrors = require('../utils/customErrors');
 exports.getAllProducts = (req, res, next) => {
   Product.find()
     .then(docs => {
-      if (!docs) next(); 
-      console.log('All products queried.');
+      console.log('All products returned.');
       return res.status(200).json(docs);
     })
     .catch(error => {
-      console.error('Error: ', error);
+      console.error('Error: ', error.errmsg);
       next(error);
     });
 };
@@ -21,7 +20,7 @@ exports.getProductById = (req, res, next) => {
   Product.findById(req.params.id)
     .then(doc => {
       if (doc) {
-        console.log(`Product queried (id: ${doc._id})`);
+        console.log(`One product returned (id: ${doc._id})`);
         return res.status(200).json(doc);
       } else {
         next();       

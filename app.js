@@ -25,7 +25,7 @@ mongoose.connect(process.env.DB_URL, {
   dbName: process.env.DB_NAME,
   useNewUrlParser: true 
 });
-mongoose.connection.once('connected', () => console.log('Connected to: ' + process.env.DB_URL + process.env.DB_NAME));
+mongoose.connection.once('connected', () => console.log('Connected to: ' + process.env.DB_URL));
 mongoose.connection.on('error', (err) => console.error('MongoDB connection error: ', err.errmsg || err.name));
 
 // Setup respons headers
