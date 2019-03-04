@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Order = require('../models/order');
+const Product = require('../models/product');
 const customErrors = require('../utils/customErrors');
 
 const isValid = mongoose.Types.ObjectId.isValid;
@@ -43,11 +44,21 @@ exports.getOrderById = (req, res, next) => {
 };
 
 exports.createOrder = (req, res, next) => {
-  const order = new Order({
-    _id: mongoose.Types.ObjectId(),
-    items: req.body
+  // Checking that products exist
+  const items = req.body.map(item => {
+    if (!isValid(item.product)) throw customErrors.invalidId();
+    return Product.findById(item.product)
+      .then(doc => {
+        if (!doc) throw customErrors.custom(`Product with id ${item.product} don't exist.`, 400);
+        return item;
+      });
   });
-  order.save()
+
+  Promise.all(items)
+    .then(items => {
+      const order = new Order({ items });
+      return order.save();
+    })
     .then(doc => {
       console.log(`Order saved (id: ${doc._id})`);
       return res.status(201).json({
@@ -56,7 +67,7 @@ exports.createOrder = (req, res, next) => {
       });
     })
     .catch(error => {
-      console.error('Error: ', error.errmsg);
+      console.error('Error: ', error.message || error.errmsg);
       next(error);
     });
 };
