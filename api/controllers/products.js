@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Product = require('../models/product');
 const customErrors = require('../utils/customErrors');
 
+const isValid = mongoose.Types.ObjectId.isValid;
+
 exports.getAllProducts = (req, res, next) => {
   Product.find()
     .then(docs => {
@@ -16,11 +18,11 @@ exports.getAllProducts = (req, res, next) => {
 
 exports.getProductById = (req, res, next) => {
   const id = req.params.id;
-  if (!mongoose.Types.ObjectId.isValid(id)) next(customErrors.invalidId());
+  if (!isValid(id)) next(customErrors.invalidId());
   Product.findById(req.params.id)
     .then(doc => {
       if (doc) {
-        console.log(`One product returned (id: ${doc._id})`);
+        console.log(`Product returned (id: ${doc._id})`);
         return res.status(200).json(doc);
       } else {
         next();       
@@ -55,7 +57,7 @@ exports.addProduct = (req, res, next) => {
 
 exports.updateProduct = (req, res, next) => {
   const id = req.params.id;
-  if (!mongoose.Types.ObjectId.isValid(id)) next(customErrors.invalidId());
+  if (!isValid(id)) next(customErrors.invalidId());
   const update = req.body;
   Product.findByIdAndUpdate(id, update, {new: true})
     .then(doc => {
@@ -74,7 +76,7 @@ exports.updateProduct = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
   const id = req.params.id;
-  if (!mongoose.Types.ObjectId.isValid(id)) next(customErrors.invalidId());
+  if (!isValid(id)) next(customErrors.invalidId());
   Product.findByIdAndDelete(id)
     .then(doc => {
       if (!doc) next(customErrors.docNotExist());
